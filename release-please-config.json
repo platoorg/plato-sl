@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "package-name": "platosl",
+      "include-v-in-tag": false,
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "changelog-sections": [
+        { "type": "add", "section": "Added", "hidden": false },
+        { "type": "edit", "section": "Changed", "hidden": false },
+        { "type": "remove", "section": "Removed", "hidden": false },
+        { "type": "docs", "section": "Documentation", "hidden": false },
+        { "type": "chore", "section": "Infrastructure", "hidden": false }
+      ],
+      "extra-files": []
+    }
+  }
+}
