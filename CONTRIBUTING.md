@@ -238,11 +238,28 @@ We use [Conventional Commits](https://www.conventionalcommits.org/) to automate 
 - **MINOR (1.0.0 → 1.1.0)**: Use `add:` for new schemas
 - **PATCH (1.0.0 → 1.0.1)**: Use `edit:`, `docs:`, or `chore:`
 
-**Examples:**
+#### Commit Message Validation
+
+**All commits are automatically validated** to ensure consistency and prevent common mistakes.
+
+**Scope Requirements:**
+- **Required** for: `add`, `edit`, `remove` (must follow format: `category/country` or `category/country/schema`)
+- **Optional** for: `docs`, `chore`, `ci`, `test`, `refactor`
+
+**Scope Format:** `{category}/{country?}/{schema?}`
+- Lowercase letters, hyphens, and forward slashes only
+- Examples: `address/us`, `content`, `geo/uk`, `address/fr/postal-codes`
+
+**Path Validation:**
+- `add` type → Schema must NOT exist yet at `base/{scope}/`
+- `edit` type → Schema MUST exist at `base/{scope}/`
+- `remove` type → Path must exist at `base/{scope}/`
+
+**Valid Examples:**
 
 ```bash
 # Adding a new schema (MINOR bump)
-git commit -m "add(address): add French address schema
+git commit -m "add(address/fr): add French address schema
 
 - Add base/address/fr with La Poste standard
 - Add base/geo/fr with regions and departments
@@ -251,27 +268,52 @@ git commit -m "add(address): add French address schema
 Addresses #123"
 
 # Editing a schema (PATCH bump)
-git commit -m "edit(address): correct UK postcode validation pattern
+git commit -m "edit(address/uk): correct UK postcode validation pattern
 
 Previous pattern incorrectly rejected valid GIR 0AA postcode"
 
-# Documentation update (PATCH bump)
+# Documentation update (PATCH bump) - scope optional
 git commit -m "docs: add usage examples for German addresses"
 
 # Removing a schema (MAJOR bump)
-git commit -m "remove(address): remove deprecated Canada address schema
+git commit -m "remove(address/ca): remove deprecated Canada address schema
 
 The CA schema has been superseded by the new North America schema.
 
 BREAKING CHANGE: base/address/ca schema removed, use base/address/na instead"
 
 # Breaking change to existing schema (MAJOR bump)
-git commit -m "edit(address)!: restructure US address schema
+git commit -m "edit(address/us)!: restructure US address schema
 
 - Rename 'street' to 'street_line1' for consistency
 - Add dedicated 'street_line2' field
 
 BREAKING CHANGE: Field 'street' renamed to 'street_line1'"
+```
+
+**Common Validation Errors:**
+
+```bash
+❌ add: missing scope                           # Scope required for 'add'
+❌ add(Address/US): wrong case                  # Must be lowercase
+❌ add(address/us): schema exists               # Use 'edit' instead
+❌ edit(address/zz): path doesn't exist         # Use 'add' instead
+```
+
+**See [docs/commit-conventions.md](docs/commit-conventions.md) for detailed guidelines.**
+
+#### Optional Pre-Push Hook
+
+Install a pre-push hook for fast local validation before pushing:
+
+```bash
+./scripts/install-hooks.sh
+```
+
+This catches validation errors locally before CI runs. You can bypass it with:
+
+```bash
+git push --no-verify  # Use only when necessary
 ```
 
 ### 8. Push and PR

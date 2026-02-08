@@ -1,0 +1,42 @@
+#!/bin/bash
+# Pre-push hook for commit validation
+# Validates commits before they are pushed to remote
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+echo "Running commit validation..."
+
+# Read from stdin: <local ref> <local sha> <remote ref> <remote sha>
+while read local_ref local_sha remote_ref remote_sha; do
+    # Skip if deleting a branch
+    if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+        continue
+    fi
+
+    # If remote branch doesn't exist yet, compare against empty tree
+    if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+        # Get the default branch (usually main or master)
+        default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
+        range="origin/$default_branch..$local_sha"
+
+        # Check if the default branch exists
+        if ! git rev-parse "origin/$default_branch" >/dev/null 2>&1; then
+            # If origin/main doesn't exist, validate all commits
+            range="$local_sha"
+        fi
+    else
+        range="$remote_sha..$local_sha"
+    fi
+
+    # Run validation script
+    if ! "$SCRIPT_DIR/scripts/validate-commits.sh" "$range"; then
+        echo ""
+        echo "Push blocked due to invalid commit messages."
+        echo "Fix the commits or use 'git push --no-verify' to bypass this check."
+        exit 1
+    fi
+done
+
+exit 0
