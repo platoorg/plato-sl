@@ -11,14 +11,12 @@ This repository contains the base schemas for the PlatoSL (Schema Language) proj
 ### Using CUE Module System
 
 ```bash
-cue mod get github.com/platoorg/plato-sl/base@v1.0.0
+cue mod get github.com/platoorg/plato-sl/base@1.0.0
 ```
 
 ### Using PlatoSL CLI
 
-```bash
-platosl add github.com/platoorg/plato-sl/base/address/us@v1.0.0
-```
+See [platosl-cli](https://github.com/platoorg/plato-sl-cli) for installation and usage instructions.
 
 ## Available Schemas
 
