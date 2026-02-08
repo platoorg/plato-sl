@@ -107,6 +107,30 @@ See [VERSIONING.md](./VERSIONING.md) for complete versioning policy.
 
 We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
+### Commit Message Conventions
+
+This repository uses structured commit messages to enable automated versioning and future changelog generation.
+
+**Quick Reference:**
+- `add(address/fr): add French address schema` - Adding new schemas
+- `edit(address/us): update ZIP validation` - Modifying existing schemas
+- `remove(content/old): remove deprecated block` - Removing schemas
+- `docs: update README` - Documentation changes
+
+**Scopes are required** for `add`, `edit`, and `remove` commits and must match the repository structure (e.g., `address/us`, `content`, `geo/uk`).
+
+See [docs/commit-conventions.md](docs/commit-conventions.md) for complete guidelines.
+
+#### Optional Pre-Push Hook
+
+Install a pre-push hook for local commit validation:
+
+```bash
+./scripts/install-hooks.sh
+```
+
+This validates your commits before pushing, catching errors early.
+
 ## Related Projects
 
 - **[platosl-cli](https://github.com/platoorg/plato-sl-cli)** - Command-line tool for working with schemas
