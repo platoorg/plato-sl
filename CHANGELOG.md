@@ -5,6 +5,26 @@ All notable changes to PlatoSL base schemas will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.2](https://github.com/platoorg/plato-sl/compare/platosl-0.0.1...platosl-0.0.2) (2026-02-09)
+
+
+### Added
+
+* first version ([3f26583](https://github.com/platoorg/plato-sl/commit/3f26583cc9813b3a4970096af21b653cb79234e3))
+
+
+### Documentation
+
+* add lato-sl-cli to docs ([5b83cb7](https://github.com/platoorg/plato-sl/commit/5b83cb70bb330004b1588468529baa3c73c49208))
+
+
+### Infrastructure
+
+* add agents file ([bb2d5f3](https://github.com/platoorg/plato-sl/commit/bb2d5f35be71a0e0f1187f3138b0f237d8b6b8b4))
+* fix release please version ([d9dec8c](https://github.com/platoorg/plato-sl/commit/d9dec8cf4394ed6f1ccf0d4a1cfaf9ad15ad5359))
+* **hooks:** correct path resolution in pre-push hook ([7c056c2](https://github.com/platoorg/plato-sl/commit/7c056c251c018f526c1fec78549f3529b2d2b381))
+* introduce commit validation tool ([7cd7997](https://github.com/platoorg/plato-sl/commit/7cd7997070592e83f182246a64cbb9332516fb81))
+
 ## [Unreleased]
 
 ### Added
